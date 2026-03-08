@@ -129,6 +129,29 @@ Puedes probar el endpoint usando la terminal (con `curl`) o herramientas como he
 }
 ```
 
+**Respuesta JSON (Response):**
+```json
+{
+  "summary": "Reunión programada para la próxima semana con el objetivo de revisar el proyecto.",
+  "entities": [
+    {
+      "name": "próxima semana",
+      "type": "DATE"
+    }
+  ],
+  "actions": [
+    "Decidir el lugar de la reunión.",
+    "Decidir quién será el presentador."
+  ],
+  "confidence": 0.3,
+  "needs_clarification": true,
+  "clarifying_questions": [
+    "¿En qué lugar físico o plataforma virtual se llevará a cabo la reunión?",
+    "¿Quién será la persona encargada de presentar?"
+  ]
+}
+```
+
 ## Explicación Técnica y Arquitectura
 
 - **Contrato de Salida Estricto (`models.py`)**: Utilizando `Pydantic` se define y restringe la respuesta (ej. la confianza en rango `0.0 a 1.0` y que los tipos de Entidades no se inventen). Se codificó un bloque `@model_validator` para prohibir que un modelo responda `needs_clarification=True` sin una lista de al menos dos (`>= 2`) preguntas.
